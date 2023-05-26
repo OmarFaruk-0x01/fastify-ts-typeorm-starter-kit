@@ -1,0 +1,43 @@
+version: '3.9'
+
+services:
+  # build_image:
+  #   build: .
+  #   image: omaribnmizan/sns:v1 # use your own image name e.g. rancher/my-app:{VERSION}
+
+  postgres:
+    container_name: postreg
+    image: postgres:15.2-alpine3.17
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=123123
+      - POSTGRES_DB=test
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - svc-network
+
+  app_svc:
+    container_name: sns-service
+    build: .
+    depends_on: [postgres]
+    restart: on-failure
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=123123
+      - POSTGRES_HOSTNAME=postgres
+      - POSTGRES_PORT=5432
+      - POSTGRES_DB=test
+    ports:
+      - 2000:9999
+    networks:
+      - svc-network
+    command: bash scripts/startup.sh
+
+networks:
+  svc-network:
+    driver: bridge
+
+volumes:
+  postgres-data:

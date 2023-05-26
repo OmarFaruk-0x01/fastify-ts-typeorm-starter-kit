@@ -1,0 +1,36 @@
+{
+  "name": "fastify-starter-tamplete",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index",
+  "scripts": {
+    "local": "nodemon --exec ts-node index",
+    "dev": "export NODE_ENV=development && ts-node index.ts",
+    "start": "set NODE_ENV=production && ts-node index.ts",
+    "add-resource": "node ./tools/cli.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^5.2.0",
+    "fastify": "^4.17.0",
+    "module-alias": "^2.2.2",
+    "pg": "^8.11.0",
+    "reflect-metadata": "^0.1.13",
+    "typeorm": "^0.3.16"
+  },
+  "devDependencies": {
+    "@types/node": "^20.2.4",
+    "handlebars": "^4.7.7",
+    "nodemon": "^2.0.22",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.0.4"
+  },
+  "_moduleAliases": {
+    "@server": "src/server",
+    "@core": "src/server/core",
+    "@api": "src/server/api",
+    "@config": "src/config"
+  }
+}
