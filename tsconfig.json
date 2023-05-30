@@ -20,8 +20,11 @@
       "@core/*": [
         "src/server/core/*"
       ],
+      "@utils/*": [
+        "src/utils/*"
+      ],
       "@config": [
-        "src/config/index"
+        "src/server/core/config/index"
       ],
       "@server": [
         "src/server/index"

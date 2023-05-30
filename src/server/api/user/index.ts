@@ -1,7 +1,3 @@
-import config from "./config";
-import route from "./route";
+import { getUserRoutes } from './user-route';
 
-export default {
-  config,
-  router: route.getRouter(),
-};
+export { getUserRoutes };

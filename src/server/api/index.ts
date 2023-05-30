@@ -1,13 +1,32 @@
-import { FastifyInstance } from "fastify";
-import user from "./user";
+import type http from 'http';
 
-function getRouter() {
-  return async (fastify: FastifyInstance, opts: any, done: Function) => {
-    // Register all module's router with their prefix
-    fastify.register(user.router, { prefix: user.config.prefix });
+import type { FastifyBaseLogger, RouteOptions } from 'fastify';
+import type { ZodTypeProvider } from 'fastify-type-provider-zod';
 
-    done();
+import { getUserRoutes } from './user';
+
+export type Routes = Array<
+  RouteOptions<
+    http.Server,
+    http.IncomingMessage,
+    http.ServerResponse,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    any,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    any,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    any,
+    ZodTypeProvider,
+    FastifyBaseLogger
+  >
+>;
+
+export function getRoutes(): {
+  routes: Routes;
+} {
+  const userRoutes = getUserRoutes();
+
+  return {
+    routes: [...userRoutes],
   };
 }
-
-export default { getRouter };

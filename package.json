@@ -4,32 +4,50 @@
   "description": "",
   "main": "index",
   "scripts": {
-    "local": "nodemon --exec ts-node index",
-    "dev": "export NODE_ENV=development && ts-node index.ts",
-    "start": "set NODE_ENV=production && ts-node index.ts",
-    "add-resource": "node ./tools/cli.js"
+    "add-resource": "node ./tools/cli.js",
+    "start:dev": "cross-env NODE_ENV=development ts-node -r dotenv/config index.ts",
+    "start:dev:watch": "cross-env NODE_ENV=development ts-node-dev -r dotenv/config index.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@fastify/auth": "^4.3.0",
+    "@fastify/awilix": "^3.0.2",
+    "@fastify/cors": "^8.3.0",
+    "@fastify/helmet": "^10.1.1",
+    "@fastify/jwt": "^7.0.0",
+    "@fastify/schedule": "^4.1.0",
+    "@fastify/swagger": "^8.5.1",
+    "@fastify/swagger-ui": "^1.8.1",
+    "awilix": "^8.0.1",
     "chalk": "^5.2.0",
     "fastify": "^4.17.0",
+    "fastify-custom-healthcheck": "^3.1.0",
+    "fastify-graceful-shutdown": "^3.4.0",
+    "fastify-no-icon": "^6.0.0",
+    "fastify-type-provider-zod": "^1.1.9",
     "module-alias": "^2.2.2",
     "pg": "^8.11.0",
+    "pino": "^8.14.1",
+    "pino-pretty": "^10.0.0",
     "reflect-metadata": "^0.1.13",
-    "typeorm": "^0.3.16"
+    "typeorm": "^0.3.16",
+    "zod": "^3.21.4"
   },
   "devDependencies": {
     "@types/node": "^20.2.4",
+    "cross-env": "^7.0.3",
     "handlebars": "^4.7.7",
     "nodemon": "^2.0.22",
     "ts-node": "^10.9.1",
+    "ts-node-dev": "^2.0.0",
     "typescript": "^5.0.4"
   },
   "_moduleAliases": {
     "@server": "src/server",
     "@core": "src/server/core",
+    "@utils": "src/utils",
     "@api": "src/server/api",
     "@config": "src/config"
   }

@@ -1,15 +1,30 @@
-// import chalk from "chalk";
+import type { PinoLoggerOptions } from 'fastify/types/logger';
+import { levels } from 'pino';
 
-function debug(message: any, ...args: any) {
-  console.log("\n");
-  console.log(`[DEBUG]: `, message, ...args);
-  console.log("\n");
+import type { AppConfig } from './config';
+import { isProduction } from './config';
+
+export function resolveLoggerConfiguration(
+  appConfig: AppConfig
+): PinoLoggerOptions | boolean {
+  const config: PinoLoggerOptions = {
+    level: appConfig.logLevel,
+    formatters: {
+      level: (label, numericLevel): { level: string } => {
+        const level = levels.labels[numericLevel] || 'unknown';
+        return { level };
+      },
+    },
+  };
+  if (!isProduction()) {
+    config.transport = {
+      target: 'pino-pretty',
+      options: {
+        colorize: true,
+        translateTime: 'SYS:standard',
+        ignore: 'hostname,pid',
+      },
+    };
+  }
+  return config;
 }
-
-function error(message: any, ...args: any) {
-  console.log("\n");
-  console.log(`[ERROR]: `, message, ...args);
-  console.log("\n");
-}
-
-export default { debug, error };
